@@ -17,18 +17,21 @@ let currentElement = null;
 
 clearBtn.addEventListener('click', function () {
   // TODO: Clear the local storage and refresh the page
+  localStorage.clear()
 });
 
 function updateLocalStorage() {
   // TODO: Update the local storage with the tempStorageObject
+  const tempStorageString = JSON.stringify(tempStorageObject)
+  localStorage.setItem('boardImages', tempStorageString)
 }
 
 // ? Function to load from local storage. This function will be called on page load.
 function loadFromLocalStorage() {
   // TODO: Load and parse the data from local storage and paint the images and text on the mood board
-
+  const storedData = localStorage.getItem('boardImages')
   if (storedData) {
-    tempStorageObject = storedData;
+    tempStorageObject = JSON.parse(storedData);
 
     // Paint the stored images on mood board
     for (let i = 0; i < tempStorageObject.images.length; i++) {
@@ -43,7 +46,7 @@ function loadFromLocalStorage() {
     // TODO: Paint the stored text to the mood board
   }
 }
-
+loadFromLocalStorage()
 //  ? We create an event listener for the image URL input field. This will create an image element and attach it to the mood board with the URL provided by the user.
 addImageBtn.addEventListener('click', function () {
   const imageUrl = imageUrlInput.value;
